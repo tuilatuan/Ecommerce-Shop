@@ -1,0 +1,26 @@
+.ant-select-selector {
+  border: none !important;
+  outline: none !important;
+  background-color: transparent !important;
+  padding: 0 !important;
+}
+.customCheckbox {
+  margin: 0;
+  width: max-content;
+  outline: none;
+  border: none;
+}
+.customCheckbox .form-control {
+  position: relative !important;
+  visibility: visible !important;
+  margin: 0 !important;
+  width: max-content;
+}
+.input-checkbox {
+  display: inline-flex;
+  align-items: center;
+}
+.input-checkbox label {
+  padding-left: 10px;
+  margin-bottom: 0;
+}

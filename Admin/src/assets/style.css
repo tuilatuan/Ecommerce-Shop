@@ -1,0 +1,9 @@
+.ant-select {
+  padding: 0;
+  border: 0;
+}
+
+.ant-select .ant-select-selector {
+  border: 0;
+  border-radius: 0;
+}

@@ -1,0 +1,147 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(255)
+  phoneNumber String?
+  address     String?
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+  Account     Account[]
+  Order       Order[]
+  Cart        Cart[]
+
+  @@map("users")
+}
+
+model Account {
+  id          Int       @id @default(autoincrement())
+  user_id     Int
+  email       String    @db.VarChar(255)
+  password    String
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+  User        User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  is_verified Boolean   @default(false)
+  role        Int
+  @@map("accounts")
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(255)
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  slug      String    @db.VarChar(255)
+  Product   Product[]
+
+  @@map("categories")
+}
+
+model ColorProduct {
+  id         Int       @id @default(autoincrement())
+  product_id Int
+  name       String    @db.VarChar(255)
+  codeColor  String    @db.VarChar(255)
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  Product    Product   @relation(fields: [product_id], references: [id], onDelete: Cascade)
+
+  @@map("colorProducts")
+}
+
+model Product {
+  id          Int     @id @default(autoincrement())
+  name        String  @db.VarChar(255)
+  slug        String
+  price       Float
+  description String  @db.VarChar(255)
+  category_id Int
+  images      String?
+
+  Category     Category       @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  ColorProduct ColorProduct[]
+  Cart         Cart[]
+  OrderDetail  OrderDetail[]
+
+  @@map("products")
+}
+
+model StatusOrder {
+  id   Int    @id @default(autoincrement())
+  name String @default("Đã xác nhận")
+
+  Order Order[]
+
+  @@map("statusOrder")
+}
+
+model ShippingType {
+  id    Int    @id @default(autoincrement())
+  name  String
+  price Float
+  total Float
+
+  Order Order[]
+
+  @@map("shippingType")
+}
+
+model Cart {
+  id         Int     @id @default(autoincrement())
+  id_user    Int
+  id_product Int
+  color      String?
+  quantity   Int
+  subTotal   Float
+
+  Product Product @relation(fields: [id_product], references: [id], onDelete: Cascade)
+  User    User    @relation(fields: [id_user], references: [id], onDelete: Cascade)
+
+  @@map("cart")
+}
+
+model Order {
+  id              Int    @id @default(autoincrement())
+  id_user         Int
+  id_shippingType Int
+  id_statusOrder  Int
+  address         String
+  totalProduct    Int
+  total           Float
+
+  User         User         @relation(fields: [id_user], references: [id], onDelete: Cascade)
+  ShippingType ShippingType @relation(fields: [id_shippingType], references: [id], onDelete: Cascade)
+  OrderStatus  StatusOrder  @relation(fields: [id_statusOrder], references: [id], onDelete: Cascade)
+
+  OrderDetail OrderDetail[]
+
+  @@map("order")
+}
+
+model OrderDetail {
+  id         Int     @id @default(autoincrement())
+  id_order   Int
+  id_product Int
+  quantity   Int
+  color      String?
+  subTotal   Float
+
+  Order   Order   @relation(fields: [id_order], references: [id], onDelete: Cascade)
+  Product Product @relation(fields: [id_product], references: [id], onDelete: Cascade)
+
+  @@map("orderDetail")
+}

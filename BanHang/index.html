@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Electro</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700"
+      rel="stylesheet"
+    />
+    <link type="text/css" rel="stylesheet" href="/asset/css/bootstrap.min.css" />
+
+    <link type="text/css" rel="stylesheet" href="/asset/css/slick.css" />
+    <link type="text/css" rel="stylesheet" href="/asset/css/slick-theme.css" />
+
+    <link type="text/css" rel="stylesheet" href="/asset/css/nouislider.min.css" />
+
+    <link rel="stylesheet" href="/asset/css/font-awesome.min.css" />
+    <link type="text/css" rel="stylesheet" href="/asset/css/style.css" />
+  </head>
+  <body>
+    <script src="/asset/js/jquery.min.js"></script>
+    <script src="/asset/js/bootstrap.min.js"></script>
+    <script src="/asset/js/slick.min.js"></script>
+    <script src="/asset/js/nouislider.min.js"></script>
+    <script src="/asset/js/jquery.zoom.min.js"></script>
+    <script src="/asset/js/wNumb.js"></script>
+    <script src="/asset/js/main.js"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+  <script type="module">
+    import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
+    Chatbot.init({
+      chatflowid: "b37b17a7-1937-4abf-b137-37968501c993",
+      apiHost: "https://dashboard.langflux.space",
+      chatflowConfig: {
+        // topK: 2
+      },
+      theme: {
+        button: {
+          backgroundColor: "#3B81F6",
+          right: 20,
+          bottom: 20,
+          size: "medium",
+          iconColor: "white",
+          customIconSrc:
+            "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg",
+        },
+        chatWindow: {
+          welcomeMessage: "Xin chào! Cửa hàng của tôi có thể giúp gì cho bạn?",
+          backgroundColor: "#ffffff",
+          height: 700,
+          width: 400,
+          fontSize: 16,
+          poweredByTextColor: "#303235",
+          botMessage: {
+            backgroundColor: "#f7f8ff",
+            textColor: "#303235",
+            showAvatar: true,
+            avatarSrc: "/asset/img/imgchatbot.png",
+          },
+          userMessage: {
+            backgroundColor: "#3B81F6",
+            textColor: "#ffffff",
+            showAvatar: true,
+            avatarSrc:
+              "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/usericon.png",
+          },
+          textInput: {
+            placeholder: "Nhập câu hỏi của bạn",
+            backgroundColor: "#ffffff",
+            textColor: "#303235",
+            sendButtonColor: "#3B81F6",
+          },
+        },
+      },
+    });
+  </script>
+</html>
